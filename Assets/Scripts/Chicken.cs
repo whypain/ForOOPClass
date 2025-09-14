@@ -1,16 +1,31 @@
 using UnityEngine;
 
-public class Chicken : MonoBehaviour
+public class Chicken : FarmAnimal
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int Eggs { get; private set; }
+
+    public Chicken(string name, int hunger, int happiness)
     {
-        
+        Name = name;
+        Eggs = 0;
+        AdjustHunger(hunger);
+        AdjustHappiness(happiness);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void GetStatus()
     {
-        
+        Debug.Log($"{Name} the {GetType().Name} - Hunger: {Hunger} | Happiness: {Happiness} | Eggs: {Eggs}");
+    }
+
+    public override void MakeSound()
+    {
+        Debug.Log($"{Name} the {GetType().Name} says: Cluck!");
+    }
+
+    public void Sleep()
+    {
+        Debug.Log($"{Name} the {GetType().Name} is sleeping.");
+        AdjustHunger(5);
+        AdjustHappiness(10);
     }
 }
