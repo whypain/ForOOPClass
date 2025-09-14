@@ -3,8 +3,8 @@ using UnityEngine;
 public abstract class FarmAnimal 
 {
     public string Name { get; protected set; }
-    public int Hunger { get; protected set; }
-    public int Happiness { get; protected set; }
+    public int Hunger { get; private set; }
+    public int Happiness { get; private set; }
 
     public abstract void MakeSound();
 
