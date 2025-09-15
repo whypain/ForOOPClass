@@ -7,7 +7,7 @@ public class Chicken : FarmAnimal
     public Chicken(string name, int hunger, int happiness)
     {
         Name = name;
-        Eggs = 1;
+        Eggs = 0;
         AdjustHunger(hunger);
         AdjustHappiness(happiness);
     }
