@@ -19,4 +19,9 @@ public class Monster : Character
     {
         Debug.Log($"{Name} -> {Health} HP | {AttackPower} AttackPower | {LootReward} LootReward");
     }
+
+    public int DropReward()
+    {
+        return lootReward;
+    }
 }
