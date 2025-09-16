@@ -1,21 +1,30 @@
 using UnityEngine;
 
-public class Hero : MonoBehaviour 
+public class Hero : Character 
 {
-    public string Name { get; private set; }
-    public int Health { get; private set; }
-    public int Gold { get; private set; }
-    public int AttackPower { get; private set; }
-
-    public void Initialize(string name, int health, int attackPower)
-    {
-        Name = name;
-        Health = health;
-        AttackPower = attackPower;
+    private int gold;
+    public int Gold 
+    { 
+        get { return gold; } 
+        private set
+        {
+            gold = Mathf.Clamp(value, 0, 999);
+        }
     }
 
-    public void ShowStat()
+    public override void Initialize(string name, int health, int attackPower)
+    {
+        base.Initialize(name, health, attackPower);
+        Gold = 0;
+    }
+
+    public override void ShowStat()
     {
         Debug.Log($"{Name} -> {Health} HP | {Gold} Gold");
+    }
+
+    public void EarnGold(int gold)
+    {
+        Gold += gold;
     }
 }
