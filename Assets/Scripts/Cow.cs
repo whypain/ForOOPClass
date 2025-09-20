@@ -4,11 +4,10 @@ public class Cow : FarmAnimal
 {
     public float Milk { get; private set; }
 
-    public Cow(string name, int hunger, int happiness)
+    public override void Initialize(string name, int hunger, int happiness)
     {
-        Name = name;
-        AdjustHunger(hunger);
-        AdjustHappiness(happiness);
+        base.Initialize(name, hunger, happiness);
+        Milk = 0f;
     }
 
     public override void GetStatus()

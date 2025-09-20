@@ -4,12 +4,10 @@ public class Chicken : FarmAnimal
 {
     public int Eggs { get; private set; }
 
-    public Chicken(string name, int hunger, int happiness)
+    public override void Initialize(string name, int hunger, int happiness)
     {
-        Name = name;
+        base.Initialize(name, hunger, happiness);
         Eggs = 0;
-        AdjustHunger(hunger);
-        AdjustHappiness(happiness);
     }
 
     public override void GetStatus()

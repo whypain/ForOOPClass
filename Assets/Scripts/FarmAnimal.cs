@@ -1,10 +1,18 @@
 using UnityEngine;
 
-public abstract class FarmAnimal 
+public abstract class FarmAnimal : MonoBehaviour
 {
     public string Name { get; protected set; }
     public int Hunger { get; private set; }
     public int Happiness { get; private set; }
+
+
+    public virtual void Initialize(string name, int hunger = 25, int happiness = 25)
+    {
+        Name = name;
+        Hunger = Mathf.Clamp(hunger, 0, 50);
+        Happiness = Mathf.Clamp(happiness, 0, 50);
+    }
 
     public abstract void MakeSound();
 
@@ -32,11 +40,18 @@ public abstract class FarmAnimal
         Debug.LogFormat($"{Name} the {GetType().Name}'s happiness is now {Happiness}({diffString})!");
     }
 
-    public virtual void Feed(string food)
+    public virtual void Feed(int amount)
     {
-        Debug.Log($"{Name} the {GetType().Name} is eating {food}.");
-        AdjustHunger(-10);
-        AdjustHappiness(5);
+        Debug.Log($"{Name} the {GetType().Name} is eating {amount} units of food.");
+        AdjustHunger(-amount);
+        AdjustHappiness(2 * amount);
+    }
+
+    public virtual void Feed(string food, int amount)
+    {
+        Debug.Log($"{Name} the {GetType().Name} is eating {amount} {food}.");
+        AdjustHunger(-amount);
+        AdjustHappiness(2 * amount);
     }
 
     public virtual void GetStatus()
