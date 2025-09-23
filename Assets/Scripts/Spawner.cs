@@ -3,33 +3,28 @@ using UnityEngine;
 
 public class Spawner
 {
-    public Dimension SpawnDimension;
     public Vector3 Origin;
+    public Area SpawnArea;
 
-    public Spawner(Dimension spawnDimension, Vector3 origin)
+    public Spawner(Vector3 origin, Area area)
     {
-        SpawnDimension = spawnDimension;
         Origin = origin;
+        SpawnArea = area;
     }
 
     public T SpawnRandomly<T>(T thingToSpawn, Transform parent = null) where T : MonoBehaviour
     {
-        // Move this logic into the dimension class
-        float w = Random.Range(-SpawnDimension.Width / 2, SpawnDimension.Width / 2);
-        float h = Random.Range(-SpawnDimension.Height / 2, SpawnDimension.Height / 2);
-        float l = Random.Range(-SpawnDimension.Length / 2, SpawnDimension.Length / 2);
-
         if (parent != null)
         {
             T spawned = GameObject.Instantiate(thingToSpawn, parent);
-            spawned.transform.position = new Vector3(l, h, w);
+            spawned.transform.position = SpawnArea.GetRandomPointInside();
 
             return spawned;
         }
         else
         {
             T spawned = GameObject.Instantiate(thingToSpawn, Origin, Quaternion.identity);
-            spawned.transform.position += new Vector3(l, h, w);
+            spawned.transform.position += SpawnArea.GetRandomPointInside();
 
             return spawned;
         }
@@ -53,21 +48,5 @@ public class Spawner
         }
 
         return spawned;
-    }
-}
-
-
-// TODO: Make this a base class instead
-public struct Dimension
-{
-    public float Width;
-    public float Height;
-    public float Length;
-
-    public Dimension(float width, float height, float length)
-    {
-        Width = width;
-        Height = height;
-        Length = length;
     }
 }

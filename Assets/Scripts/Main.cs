@@ -13,19 +13,35 @@ public class Main : MonoBehaviour
         monsters = new List<Monster>();
 
         hero.ShowStat();
-        hero.Initialize("Johnson", 20, 10);
+        hero.Initialize("Johnson", 200, 10);
         hero.ShowStat();
 
-        Spawner spawnArea = new Spawner(new Dimension(25, 1, 25), Vector3.zero);
+        Vector3 spawnOrigin = hero.transform.position + new Vector3(0, 0, 7);
+        Spawner spawnArea = new Spawner(spawnOrigin, new Sphere(spawnOrigin, 5));
+
         monsters = spawnArea.SpawnAll(monsterPrefabs);
         monsters[0].Initialize("Orc", 200, 10, 100);
         monsters[1].Initialize("Goblin", 200, 10, 100);
         monsters[2].Initialize("Dragon", 200, 10, 100);
-        monsters[3].Initialize("Gigi", 200, 10, 100);
+        monsters[3].Initialize("Gigi", 10, 10, 100);
 
         foreach (Monster monster in monsters)
         {
             monster.ShowStat();
         }
+
+        Monster currMonster = monsters[3];
+        currMonster.Attack(hero);
+        hero.Attack(currMonster);
+        currMonster.ShowStat();
+
+        if (currMonster.IsDead)
+        {
+            hero.EarnGold(currMonster.DropReward());
+        }
+
+        hero.ShowStat();
+        hero.Heal(10);
+        hero.ShowStat();
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public abstract class Character : MonoBehaviour
 {
@@ -17,26 +18,23 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    private int health;
-    public int Health 
-    { 
-        get { return health; }
-        protected set
-        {
-            health = Mathf.Clamp(value, 0, 100);
-        }
-    }
+    public int Health { get; protected set; }
 
     public int AttackPower { get; protected set; }
 
     public virtual bool IsDead { get => Health <= 0; }
+
+
+    protected int maxHealth;
+
 
     public abstract void ShowStat();
 
     public virtual void Initialize(string name, int health, int attackPower)
     {
         Name = name;
-        Health = health;
+        maxHealth = health;
+        Health = maxHealth;
         AttackPower = attackPower;
     }
 
@@ -49,7 +47,6 @@ public abstract class Character : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Health -= damage;
-        Mathf.Clamp(Health, 0, 100);
+        Health = Mathf.Clamp(Health, 0, maxHealth);
     }
-
 }
