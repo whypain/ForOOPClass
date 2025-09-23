@@ -13,17 +13,16 @@ public class Main : MonoBehaviour
         monsters = new List<Monster>();
 
         hero.ShowStat();
-        hero.Initialize("Johnson", 200, 10);
+        hero.Initialize("Johnson", 200, 20);
         hero.ShowStat();
 
         Vector3 spawnOrigin = hero.transform.position + new Vector3(0, 0, 7);
         Spawner spawnArea = new Spawner(spawnOrigin, new Sphere(spawnOrigin, 5));
 
-        monsters = spawnArea.SpawnAll(monsterPrefabs);
-        monsters[0].Initialize("Orc", 200, 10, 100);
-        monsters[1].Initialize("Goblin", 200, 10, 100);
-        monsters[2].Initialize("Dragon", 200, 10, 100);
-        monsters[3].Initialize("Gigi", 10, 10, 100);
+        SpawnMonster(MonsterType.Dragon, spawnArea);
+        SpawnMonster(MonsterType.Orc, spawnArea);
+        SpawnMonster(MonsterType.Goblin, spawnArea);
+        SpawnMonster(MonsterType.Gigi, spawnArea);
 
         foreach (Monster monster in monsters)
         {
@@ -32,16 +31,30 @@ public class Main : MonoBehaviour
 
         Monster currMonster = monsters[3];
         currMonster.Attack(hero);
+        hero.ShowStat();
         hero.Attack(currMonster);
+        currMonster.ShowStat();
+
+        hero.Heal(10);
+        hero.ShowStat();
+        currMonster.Attack(hero, 20);
+        hero.ShowStat();
+
+        hero.Attack(currMonster, 20);
         currMonster.ShowStat();
 
         if (currMonster.IsDead)
         {
             hero.EarnGold(currMonster.DropReward());
         }
+    }
 
-        hero.ShowStat();
-        hero.Heal(10);
-        hero.ShowStat();
+    private void SpawnMonster(MonsterType monsterType, Spawner spawner)
+    {
+        Monster monsterPrefab = monsterPrefabs[(int)monsterType];
+        Monster monsterObj = spawner.SpawnRandomly(monsterPrefab);
+        monsterObj.InitializeByMonsterType(monsterType);
+
+        monsters.Add(monsterObj);
     }
 }

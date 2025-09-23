@@ -30,7 +30,7 @@ public abstract class Character : MonoBehaviour
 
     public abstract void ShowStat();
 
-    public virtual void Initialize(string name, int health, int attackPower)
+    public void Initialize(string name, int health, int attackPower)
     {
         Name = name;
         maxHealth = health;
@@ -38,15 +38,18 @@ public abstract class Character : MonoBehaviour
         AttackPower = attackPower;
     }
 
-    public void Attack(Character target)
-    {
-        Debug.Log($"{Name} attacks {target.Name}. {target.Name} lose {AttackPower} HP!");
-        target.TakeDamage(AttackPower);
-    }
+    public abstract void Attack(Character target);
+    public abstract void Attack(Character target, int bonusDamage);
+    public abstract void OnDefeated();
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
+        int oldHealth = Health;
         Health -= damage;
         Health = Mathf.Clamp(Health, 0, maxHealth);
+
+        Debug.Log($"{Name} lose {oldHealth - Health} HP!");
+
+        if (IsDead) OnDefeated();
     }
 }

@@ -264,9 +264,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hero: {fileID: 370415795}
   monsterPrefabs:
-  - {fileID: 7971402322689063407, guid: 3cc1dd90d43ea8a4b9e7d8edad8053fd, type: 3}
-  - {fileID: 7971402322689063407, guid: 907a3999671a70c48b6a8794c03407d8, type: 3}
   - {fileID: 7971402322689063407, guid: bf29299d1b0c5834e811d0e2bdeb7277, type: 3}
+  - {fileID: 7971402322689063407, guid: 907a3999671a70c48b6a8794c03407d8, type: 3}
+  - {fileID: 7971402322689063407, guid: 3cc1dd90d43ea8a4b9e7d8edad8053fd, type: 3}
   - {fileID: 7971402322689063407, guid: a406b1692c7c5e74fb0ba5e08825c261, type: 3}
 --- !u!1 &705507993
 GameObject:
