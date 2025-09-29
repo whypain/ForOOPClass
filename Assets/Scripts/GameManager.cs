@@ -17,14 +17,16 @@ public class GameManager : MonoBehaviour
         animals = new List<FarmAnimal>();
 
         // Initialize every animals
-        Michael.Initialize("Michael", 30, 20);
+        Michael.Initialize("Michael");
         animals.Add(Michael);
 
-        Henry.Initialize("Henry", 15, 35);
+        Henry.Initialize("Henry");
         animals.Add(Henry);
 
-        Fiona.Initialize("Fiona", 40, 10);
+        Fiona.Initialize("Fiona");
         animals.Add(Fiona);
+
+        Debug.Log($"There are {animals.Count} animals in the farm");
 
         foreach (FarmAnimal animal in animals)
         {
@@ -34,17 +36,20 @@ public class GameManager : MonoBehaviour
             switch (animal)
             {
                 case Cow cow:
-                    cow.Moo();
-                    cow.Feed(5);
+                    cow.Feed(FoodType.RottenFood, 500);
                     break;
                 case Chicken chicken:
-                    chicken.Sleep();
-                    chicken.Feed("corns", 3);
+                    chicken.Feed(FoodType.Grain, 1000);
                     break;
                 case Fox fox:
                     fox.Hunt(Henry);
                     break;
             }
         }
+
+        Debug.Log(Michael.Produce());
+        Debug.Log(Henry.Produce());
+        Debug.Log(Fiona.Produce());
+        Debug.Log(Fiona.Produce());
     }
 }
