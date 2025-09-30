@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 535882022202663713, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
       propertyPath: m_Name
-      value: Monster
+      value: Goblin
       objectReference: {fileID: 0}
     - target: {fileID: 4155003322295691280, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,8 +52,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5460610859774383464, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 535882022202663713, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 697857343805249171}
   m_SourcePrefab: {fileID: 100100000, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
+--- !u!1 &2452268634178621350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 535882022202663713, guid: ead9928f7364e7544b73747105eacdcf, type: 3}
+  m_PrefabInstance: {fileID: 2695369779491171463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &697857343805249171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452268634178621350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb485c915c5dd454eb4a99b2112e8af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

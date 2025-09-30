@@ -5,12 +5,17 @@ public class Main : MonoBehaviour
 {
     [SerializeField] Hero hero;
     [SerializeField] List<Monster> monsterPrefabs;
+    [SerializeField] List<Weapon> weaponPrefabs;
+
+    [SerializeField] string[] names;
 
     private List<Monster> monsters;
+    private List<Weapon> weapons;
 
     private void Start()
     {
         monsters = new List<Monster>();
+        weapons = new List<Weapon>();
 
         hero.ShowStat();
         hero.Initialize("Johnson", 200, 20);
@@ -19,15 +24,48 @@ public class Main : MonoBehaviour
         Vector3 spawnOrigin = hero.transform.position + new Vector3(0, 0, 7);
         Spawner spawnArea = new Spawner(spawnOrigin, new Sphere(spawnOrigin, 5));
 
-        SpawnMonster(MonsterType.Dragon, spawnArea);
-        SpawnMonster(MonsterType.Orc, spawnArea);
-        SpawnMonster(MonsterType.Goblin, spawnArea);
-        SpawnMonster(MonsterType.Gigi, spawnArea);
+        Weapon sword = Instantiate(weaponPrefabs[0], hero.transform);
+        sword.transform.localPosition += new Vector3(0, 1, 0);
+        weapons.Add(sword);
+
+        foreach (Monster monster in monsterPrefabs)
+        {
+            Monster spawned = SpawnMonster(monster, spawnArea);
+            string name = names[Random.Range(0, names.Length)];
+            spawned.InitializeMonster($"{name} the {spawned.GetType().Name}");
+            spawned.ShowStat();
+            spawned.Roar();
+
+            spawned.Attack(hero);
+        }
+
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            Weapon spawned = Instantiate(weaponPrefabs[i], monsters[i].transform);
+            spawned.transform.localPosition += new Vector3(0, 1, 0);
+            weapons.Add(spawned);
+        }
+
+        weapons[0].Initialize("Sword", 10);
+        hero.EquipWeapon(weapons[0]);
+
+        weapons[1].Initialize("Mace", 5);
+        monsters[0].EquipWeapon(weapons[1]);
+
+        weapons[2].Initialize("Spear", 6);
+        monsters[1].EquipWeapon(weapons[2]);
+
+        weapons[3].Initialize("Claw", 15);
+        monsters[2].EquipWeapon(weapons[3]);
+
+        weapons[4].Initialize("Guitar", 40);
+        monsters[3].EquipWeapon(weapons[4]);
 
         foreach (Monster monster in monsters)
         {
-            monster.ShowStat();
+            monster.Attack(hero, monster.EquippedWeapon);
         }
+
 
         Monster currMonster = monsters[3];
         currMonster.Attack(hero);
@@ -49,12 +87,12 @@ public class Main : MonoBehaviour
         }
     }
 
-    private void SpawnMonster(MonsterType monsterType, Spawner spawner)
+    private Monster SpawnMonster(Monster monsterPrefab, Spawner spawner)
     {
-        Monster monsterPrefab = monsterPrefabs[(int)monsterType];
         Monster monsterObj = spawner.SpawnRandomly(monsterPrefab);
-        monsterObj.InitializeByMonsterType(monsterType);
 
         monsters.Add(monsterObj);
+
+        return monsterObj;
     }
 }

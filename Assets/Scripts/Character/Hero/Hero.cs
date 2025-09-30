@@ -28,7 +28,6 @@ public class Hero : Character
     {
         if (IsDead) return;
         Debug.Log($"<color=cyan>{Name} uses Iron Tail! It was super effective with {AttackPower} attack power!</color>");
-        target.TakeDamage(AttackPower);
     }
 
     public override void Attack(Character target, int bonusDamage)

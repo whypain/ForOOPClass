@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public abstract class Character : MonoBehaviour
 {
@@ -19,8 +18,8 @@ public abstract class Character : MonoBehaviour
     }
 
     public int Health { get; protected set; }
-
     public int AttackPower { get; protected set; }
+    public Weapon EquippedWeapon { get; private set; }
 
     public virtual bool IsDead { get => Health <= 0; }
 
@@ -38,9 +37,20 @@ public abstract class Character : MonoBehaviour
         AttackPower = attackPower;
     }
 
+    public abstract void OnDefeated();
     public abstract void Attack(Character target);
     public abstract void Attack(Character target, int bonusDamage);
-    public abstract void OnDefeated();
+
+
+    public virtual void Attack(Character target, Weapon weapon)
+    {
+        if (IsDead) return;
+        if (weapon == null) throw new System.ArgumentNullException("weapon can't be null");
+
+        Debug.LogFormat($"<color=magenta>{Name} equipped the {weapon.name} and attacks {target.Name} with {weapon.BonusDamage} increased damage!</color>");
+        target.TakeDamage(AttackPower + weapon.BonusDamage);
+
+    }
 
     public virtual void TakeDamage(int damage)
     {
@@ -51,5 +61,10 @@ public abstract class Character : MonoBehaviour
         Debug.Log($"{Name} lose {oldHealth - Health} HP!");
 
         if (IsDead) OnDefeated();
+    }
+
+    public void EquipWeapon(Weapon weapon)
+    {
+        EquippedWeapon = weapon;
     }
 }
